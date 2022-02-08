@@ -1,20 +1,46 @@
 package boletin7;
 
-public class Persona {
-    private String nombre, DNI;
+enum GENERO {H, M, O}
+
+public class Persona implements Comparable<Persona>{
+    private String nombre, dni;
     private int edad;
-    private char genero;
+    private GENERO genero;
     private double peso, altura;
 
-    public Persona(String nombre, String DNI, int edad, char genero, double peso, double altura) {
+    //Constructor con con atributos por defecto
+    public Persona() {
+        this.nombre = "";
+        this.dni = "";
+        this.edad = 0;
+        this.genero = GENERO.O;
+        this.peso = 0;
+        this.altura = 0;
+    }
+
+    //Constructor ordinario para rellenar
+    public Persona(String nombre, String dni, int edad, GENERO genero, double peso, double altura) {
         this.nombre = nombre;
-        this.DNI = DNI;
+        this.dni = dni;
         this.edad = edad;
         this.genero = genero;
         this.peso = peso;
         this.altura = altura;
     }
 
+    //Constructor copia
+    @Override
+    protected Object clone() {
+        Persona persona=null;
+        try {
+            persona= (Persona) super.clone();
+        }catch (CloneNotSupportedException e){
+            System.out.println("No se puede clonar el objeto");
+        }
+        return persona;
+    }
+
+    //Getters y setters
     public String getNombre() {
         return nombre;
     }
@@ -23,12 +49,12 @@ public class Persona {
         this.nombre = nombre;
     }
 
-    public String getDNI() {
-        return DNI;
+    public String getDni() {
+        return dni;
     }
 
-    public void setDNI(String DNI) {
-        this.DNI = DNI;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public int getEdad() {
@@ -39,11 +65,11 @@ public class Persona {
         this.edad = edad;
     }
 
-    public char getGenero() {
+    public GENERO getGenero() {
         return genero;
     }
 
-    public void setGenero(char genero) {
+    public void setGenero(GENERO genero) {
         this.genero = genero;
     }
 
@@ -58,21 +84,64 @@ public class Persona {
     public double getAltura() {
         return altura;
     }
-
-    public void setAltura(double altura) {
-        this.altura = altura;
+    public void setAltura(double altura){
+        this.altura=altura;
     }
 
-    public double imc (){
+    //Método toString propio
+    @Override
+    public String toString(){
+        return "Persona: "+System.lineSeparator()+
+                "Nombre: "+nombre+System.lineSeparator()+
+                "DNI: "+dni+System.lineSeparator()+
+                "Género: "+genero+System.lineSeparator()+
+                "Edad: "+edad+System.lineSeparator()+
+                "Peso: "+peso+System.lineSeparator()+
+                "Altura: "+altura+System.lineSeparator();
+    }
+
+    /*
+     * Método que calcula el imc dividiendo el peso de la persona entre su altura en metros al
+     * cuadrado y la devuelve para usarla después
+     * @return Devuelve un double que corresponde al imc de la persona
+     */
+    public double calcularImc (){
         double imc = this.peso / Math.pow(this.altura, 2);
+        return imc;
+    }
+    /*
+     * Método para ver si la persona está bajopeso, normopeso o con sobrepeso a través de if,
+     * else if y else; llama al método calcularImc y si el imc es menor de 18.5, está bajopeso
+     * (devuelve -1), si está entre 18.5 y 24.9, está normopeso (devuelve 0) y si es mayor a
+     * 24.9 está con sobrepeso (devuelve 1)
+     * @return Devuelve un int que indica en qué rango de peso está
+     */
+    public double imc (){
         int dev;
-        if (imc<18.5){
+        if (calcularImc()<18.5){
             dev=-1;
-        }else if (imc>=18.5 &&imc <=24.9){
+        }else if (calcularImc()>=18.5 && calcularImc()<=24.9){
             dev=0;
         }else {
             dev=1;
         }
         return dev;
+    }
+    /*
+     * Metodo para comprobar si es mayor de edad (18 años) a través de un bucle if; si es mayor de 18 años,
+     * devuelve un booleno con true y si es no es mayor de 18 con un false
+     * @return devuelve un booleano que indica si es o no mayor de edad
+     */
+    public boolean mayorEdad (){
+        boolean mayor=false;
+        if (this.edad>=18){
+           mayor=true;
+        }
+        return mayor;
+    }
+    //compareTo de nombre por orden natural
+    @Override
+    public int compareTo(Persona objc){
+        return this.nombre.compareTo(objc.nombre);
     }
 }
