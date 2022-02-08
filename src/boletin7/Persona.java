@@ -1,21 +1,22 @@
 package boletin7;
 
-enum GENERO {H, M, O}
+enum GENERO {H, M, O, NULL}
 
 public class Persona implements Comparable<Persona>{
     private String nombre, dni;
     private int edad;
     private GENERO genero;
-    private double peso, altura;
+    private double peso, altura, imc;
 
     //Constructor con con atributos por defecto
     public Persona() {
         this.nombre = "";
         this.dni = "";
         this.edad = 0;
-        this.genero = GENERO.O;
+        this.genero = GENERO.NULL;
         this.peso = 0;
         this.altura = 0;
+        this.imc=0;
     }
 
     //Constructor ordinario para rellenar
@@ -26,10 +27,11 @@ public class Persona implements Comparable<Persona>{
         this.genero = genero;
         this.peso = peso;
         this.altura = altura;
+        this.imc=calcularImc();
     }
 
-    //Constructor copia
-    @Override
+    //Constructor copia//////////////////////////////////////////////////////////////////
+    /*@Override
     protected Object clone() {
         Persona persona=null;
         try {
@@ -38,7 +40,7 @@ public class Persona implements Comparable<Persona>{
             System.out.println("No se puede clonar el objeto");
         }
         return persona;
-    }
+    }*/
 
     //Getters y setters
     public String getNombre() {
@@ -84,8 +86,13 @@ public class Persona implements Comparable<Persona>{
     public double getAltura() {
         return altura;
     }
+
     public void setAltura(double altura){
         this.altura=altura;
+    }
+
+    public double getImc() {
+        return imc;
     }
 
     //Método toString propio
@@ -97,7 +104,8 @@ public class Persona implements Comparable<Persona>{
                 "Género: "+genero+System.lineSeparator()+
                 "Edad: "+edad+System.lineSeparator()+
                 "Peso: "+peso+System.lineSeparator()+
-                "Altura: "+altura+System.lineSeparator();
+                "Altura: "+altura+System.lineSeparator()+
+                "IMC: "+imc;
     }
 
     /*
