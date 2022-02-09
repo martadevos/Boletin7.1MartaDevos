@@ -6,35 +6,76 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner s=new Scanner(System.in);
-        String genero;
-        Persona Persona1=new Persona();
-        System.out.println("Introduzca su nombre: ");
-        Persona1.setNombre(s.next());
-        System.out.println("Introduzca su DNI: ");
-        Persona1.setDni(s.next());
-        System.out.println("Introduzca su edad: ");
-        Persona1.setEdad(s.nextInt());
-        System.out.println("Introduzca su peso: ");
-        Persona1.setPeso(s.nextDouble());
-        System.out.println("Introduzca su altura: ");
-        Persona1.setAltura(s.nextDouble());
-        System.out.println("Introduzca su género. (hombre, mujer u otro): ");
-        while (Persona1.getGenero()==GENERO.NULL) {
-            System.out.println("No es correcto, introduzca de nuevo su género. (hombre, mujer u otro) ");
-            genero=s.next();
-            switch (genero){
-                case "hombre":
-                    Persona1.setGenero(GENERO.H);
-                    break;
-                case "mujer":
-                    Persona1.setGenero(GENERO.M);
-                    break;
-                case "otro":
-                    Persona1.setGenero(GENERO.O);
-                    break;
-                default:
+        int resp, cant=0, hombre=0, mujer=0, otro=0, estado;
+        double sumaPeso=0, sumaAltura=0, sumaEdad=0;
+        GENERO genero;
+        //Bucle do-while para repetir el programa hatsa que la persona quiera dejar de introducir datos, sale pulsando 0
+        do{
+            cant++;
+            System.out.println("Se va a crear una nueva persona");
+            Persona persona=new Persona();
+            persona.introducirDatos();
+            estado=persona.imc(persona.getPeso(), persona.getAltura());
+            switch (estado) {
+                case -1 -> System.out.println("Está bajo su peso ideal");
+                case 0 -> System.out.println("Está en su peso ideal");
+                case 1 -> System.out.println("Está por encima de su peso ideal");
             }
-        }
+            if (persona.mayorEdad()){
+                System.out.println("Es mayor de edad");
+            }else {
+                System.out.println("No es mayor de edad");
+            }
+            System.out.println(persona.toString());
+            System.out.println("¿Desea introducir los datos de otra persona? pulse 1 para sí y 0 para no");
+            resp=s.nextInt();
+            sumaPeso+= persona.getPeso();
+            sumaAltura+= persona.getAltura();
+            sumaEdad+= persona.getEdad();
+            genero=persona.getGenero();
+            switch (genero) {
+                case H -> hombre++;
+                case M -> mujer++;
+                case O -> otro++;
+            }
+        }while (resp==1);
+        do {
+            menu(cant, sumaPeso, sumaAltura, sumaEdad, hombre, mujer, otro);
+            System.out.println("¿Desea ver algo más? pulse 1 para sí y 0 para no");
+            resp=s.nextInt();
+        }while (resp==1);
+    }
 
+    public static void menu(int cant, double sumaPeso, double sumaAltura, double sumaEdad, int hombre, int mujer, int otro){
+        Scanner s=new Scanner(System.in);
+        int resp;
+        System.out.println("Introduzca los siguientes números dependiendo de la acción que quiera realizar:");
+        System.out.println("1 para la media del peso de todas las personas");
+        System.out.println("2 para la media de la altura de todas las personas");
+        System.out.println("3 para la media de edad de todas las personas");
+        System.out.println("4 para cuantas personas de cada género hubo");
+        resp=s.nextInt();
+        switch (resp){
+            case 1:
+                System.out.println("La media del peso de las personas es "+media(cant, sumaPeso));
+                break;
+            case 2:
+                System.out.println("La media de la altura de las personas es "+media(cant, sumaAltura));
+                break;
+            case 3:
+                System.out.println("La media de edad de las personas es "+media(cant, sumaEdad));
+                break;
+            case 4:
+                System.out.println("El "+porcentaje(cant, hombre)+"% son hombres. ("+hombre+" hombres)");
+                System.out.println("El "+porcentaje(cant, mujer)+"% son mujeres. ("+mujer+" mujeres)");
+                System.out.println("El "+porcentaje(cant, otro)+"% son otros. ("+otro+" otros)");
+                break;
+        }
+    }
+    public static double media (int cant, double suma){
+        return suma/cant;
+    }
+    public static double porcentaje (int cant, int x){
+        return (double) x*100/cant;
     }
 }
