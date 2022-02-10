@@ -30,7 +30,7 @@ public class Persona implements Comparable<Persona> {
         this.altura = altura;
     }
 
-    //Constructor copia//////////////////////////////////////////////////////////////////
+    //Constructor copia
     public Persona(Persona persona) {
         this.nombre = persona.nombre;
         this.dni = persona.dni;
@@ -112,7 +112,7 @@ public class Persona implements Comparable<Persona> {
                 "Edad: " + edad + System.lineSeparator() +
                 "Peso: " + peso + System.lineSeparator() +
                 "Altura: " + altura + System.lineSeparator() +
-                "IMC: " + calcularImc(this.peso, this.altura);
+                "IMC: " + calcularImc();
     }
 
     /*
@@ -120,8 +120,8 @@ public class Persona implements Comparable<Persona> {
      * cuadrado y la devuelve para usarla después
      * @return Devuelve un double que corresponde al imc de la persona
      */
-    public double calcularImc(double peso, double altura) {
-        return peso / Math.pow(altura, 2);
+    public double calcularImc() {
+        return this.peso / Math.pow(this.altura, 2);
     }
 
     /*
@@ -131,11 +131,11 @@ public class Persona implements Comparable<Persona> {
      * 24.9 está con sobrepeso (devuelve 1)
      * @return Devuelve un int que indica en qué rango de peso está
      */
-    public int imc(double peso, double altura) {
+    public int imc() {
         int dev;
-        if (calcularImc(peso, altura) < 18.5) {
+        if (calcularImc() < 18.5) {
             dev = -1;
-        } else if (calcularImc(peso, altura) >= 18.5 && calcularImc(peso, altura) <= 24.9) {
+        } else if (calcularImc() >= 18.5 && calcularImc() <= 24.9) {
             dev = 0;
         } else {
             dev = 1;
@@ -193,12 +193,12 @@ public class Persona implements Comparable<Persona> {
         if(this==obj){
             resp=true;
         } else if (obj != null && obj instanceof Persona otra) {
-            if (this.getNombre()==otra.getNombre()&&
-            this.getDni()==(otra.getDni())&&
-            this.getGenero()==otra.getGenero()&&
-            this.getEdad()==otra.getEdad()&&
-            this.getPeso()==otra.getPeso()&&
-            this.getAltura()==otra.getAltura()){
+            if (this.nombre.equals(otra.nombre)&&
+            this.dni.equals(otra.dni)&&
+            this.genero.equals(otra.genero)&&
+            this.edad==otra.edad&&
+            this.peso==otra.peso&&
+            this.altura==otra.altura){
                 resp=true;
             }
         }
