@@ -1,6 +1,5 @@
 package boletin7;
 
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -27,7 +26,7 @@ public class Main {
             }else {
                 System.out.println("No es mayor de edad");
             }
-            System.out.println(persona.toString());
+            System.out.println(persona);
             System.out.println("¿Desea introducir los datos de otra persona? pulse 1 para sí y 0 para no");
             resp=s.nextInt();
             sumaPeso+= persona.getPeso();
@@ -58,21 +57,15 @@ public class Main {
         System.out.println("4 para cuantas personas de cada género hubo");
         resp=s.nextInt();
         //Switch para que realice una acción del menú según la respuesta que se haya escogido
-        switch (resp){
-            case 1:
-                System.out.println("La media del peso de las personas es "+media(cant, sumaPeso));
-                break;
-            case 2:
-                System.out.println("La media de la altura de las personas es "+media(cant, sumaAltura));
-                break;
-            case 3:
-                System.out.println("La media de edad de las personas es "+media(cant, sumaEdad));
-                break;
-            case 4:
-                System.out.println("El "+porcentaje(cant, hombre)+"% son hombres. ("+hombre+" hombres)");
-                System.out.println("El "+porcentaje(cant, mujer)+"% son mujeres. ("+mujer+" mujeres)");
-                System.out.println("El "+porcentaje(cant, otro)+"% son otros. ("+otro+" otros)");
-                break;
+        switch (resp) {
+            case 1 -> System.out.println("La media del peso de las personas es " + media(cant, sumaPeso));
+            case 2 -> System.out.println("La media de la altura de las personas es " + media(cant, sumaAltura));
+            case 3 -> System.out.println("La media de edad de las personas es " + media(cant, sumaEdad));
+            case 4 -> {
+                System.out.println("El " + porcentaje(cant, hombre) + "% son hombres. (" + hombre + " hombres)");
+                System.out.println("El " + porcentaje(cant, mujer) + "% son mujeres. (" + mujer + " mujeres)");
+                System.out.println("El " + porcentaje(cant, otro) + "% son otros. (" + otro + " otros)");
+            }
         }
     }
     public static double media (int cant, double suma){
