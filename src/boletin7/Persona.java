@@ -180,11 +180,7 @@ public class Persona implements Comparable<Persona> {
                 case "hombre" -> this.genero = GENERO.H;
                 case "mujer" -> this.genero = GENERO.M;
                 case "otro" -> this.genero = GENERO.O;
-                default -> {
-                }
-            }
-            if (this.genero==GENERO.NULL){
-                System.out.println("No es correcto, introduzca de nuevo su género. (hombre, mujer u otro) ");
+                default -> System.out.println("No es correcto, introduzca de nuevo su género. (hombre, mujer u otro) ");
             }
         }
     }
