@@ -1,7 +1,5 @@
 package boletin7;
 
-import java.util.Scanner;
-
 enum GENERO {H, M, O, NULL}
 
 public class Persona implements Comparable<Persona> {
@@ -51,7 +49,6 @@ public class Persona implements Comparable<Persona> {
         }
         return persona;
     }
-
 
     //Getters y setters
     public String getNombre() {
@@ -143,6 +140,31 @@ public class Persona implements Comparable<Persona> {
         return dev;
     }
 
+
+
+    //compareTo de nombre por orden natural
+    @Override
+    public int compareTo(Persona objc) {
+        return this.nombre.compareTo(objc.nombre);
+    }
+
+    public boolean equals(Object obj) {
+        boolean resp = false;
+        if (this == obj) {
+            resp = true;
+        } else if (obj instanceof Persona otra) {
+            if (this.nombre.equals(otra.nombre) &&
+                    this.dni.equals(otra.dni) &&
+                    this.genero.equals(otra.genero) &&
+                    this.edad == otra.edad &&
+                    this.peso == otra.peso &&
+                    this.altura == otra.altura) {
+                resp = true;
+            }
+        }
+        return resp;
+    }
+
     /*
      * Metodo para comprobar si es mayor de edad (18 años) a través de un bucle if; si es mayor de 18 años,
      * devuelve un booleno con true y si es no es mayor de 18 con un false
@@ -152,53 +174,42 @@ public class Persona implements Comparable<Persona> {
         return this.edad >= 18;
     }
 
-    //compareTo de nombre por orden natural
-    @Override
-    public int compareTo(Persona objc) {
-        return this.nombre.compareTo(objc.nombre);
-    }
-
     /*Método para crear nuevas personas pidiendo: nombre, DNI, edad, peso, altura y género y
     almacenando los datos en el objeto persona*/
     public void introducirDatos() {
-        Scanner s = new Scanner(System.in);
         String genero;
         System.out.println("Introduzca su nombre: ");
-        this.nombre=s.next();
+        this.nombre = Utilidades.s.next();
         System.out.println("Introduzca su DNI: ");
-        this.dni=s.next();
+        this.dni = Utilidades.s.next();
         System.out.println("Introduzca su edad: ");
-        this.edad=s.nextInt();
+        this.edad = Utilidades.s.nextInt();
+        Utilidades.sumaEdad += this.edad;
         System.out.println("Introduzca su peso: ");
-        this.peso=s.nextDouble();
+        this.peso = Utilidades.s.nextDouble();
+        Utilidades.sumaPeso += this.peso;
         System.out.println("Introduzca su altura: ");
-        this.altura=s.nextDouble();
+        this.altura = Utilidades.s.nextDouble();
+        Utilidades.sumaAltura += this.altura;
         System.out.println("Introduzca su género. (hombre, mujer u otro): ");
         while (this.genero == GENERO.NULL) {
-            genero = s.next();
+            genero = Utilidades.s.next();
             switch (genero) {
-                case "hombre" -> this.genero = GENERO.H;
-                case "mujer" -> this.genero = GENERO.M;
-                case "otro" -> this.genero = GENERO.O;
+                case "hombre" -> {
+                    this.genero = GENERO.H;
+                    Utilidades.hombre++;
+                }
+                case "mujer" -> {
+                    this.genero = GENERO.M;
+                    Utilidades.mujer++;
+                }
+                case "otro" -> {
+                    this.genero = GENERO.O;
+                    Utilidades.otro++;
+                }
                 default -> System.out.println("No es correcto, introduzca de nuevo su género. (hombre, mujer u otro) ");
             }
         }
-    }
-    public boolean equals(Object obj){
-        boolean resp=false;
-        if(this==obj){
-            resp=true;
-        } else if (obj != null && obj instanceof Persona otra) {
-            if (this.nombre.equals(otra.nombre)&&
-            this.dni.equals(otra.dni)&&
-            this.genero.equals(otra.genero)&&
-            this.edad==otra.edad&&
-            this.peso==otra.peso&&
-            this.altura==otra.altura){
-                resp=true;
-            }
-        }
-        return resp;
     }
 }
 
