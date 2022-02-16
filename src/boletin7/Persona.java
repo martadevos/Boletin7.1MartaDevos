@@ -186,10 +186,10 @@ public class Persona implements Comparable<Persona> {
         this.edad = Utilidades.leerNumero();
         Utilidades.sumaEdad += this.edad;
         System.out.println("Introduzca su peso: ");
-        this.peso = Utilidades.s.nextDouble();
+        this.peso = Utilidades.leerDouble();
         Utilidades.sumaPeso += this.peso;
         System.out.println("Introduzca su altura: ");
-        this.altura = Utilidades.s.nextDouble();
+        this.altura = Utilidades.leerDouble();
         Utilidades.sumaAltura += this.altura;
         System.out.println("Introduzca su género. (hombre, mujer u otro): ");
         while (this.genero == GENERO.NULL) {

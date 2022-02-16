@@ -25,6 +25,26 @@ public class Utilidades {
         }while (!salir);
         return numero;
     }
+
+    /**
+     * Método de comprobación para la entrada de datos al programa.
+     * @return Devuelve un double que nos sirve para el menú e introducir datos; además comprobamos su validez.
+     */
+    public static double leerDouble (){
+        double numero = 0;
+        boolean salir=false;
+        do {
+            try {
+                numero = s.nextDouble();
+                salir=true;
+            } catch (Exception e) {
+                s.nextLine();
+                System.out.println("Esto no es un número entero.");
+            }
+        }while (!salir);
+        return numero;
+    }
+
     /**
      * Este programa es para mostrar el menú final de preguntando que se desea hacer con los datos introducidos.
      */
